@@ -1,4 +1,4 @@
-import logo from "@/assets/logo.jpg";
+import Logo from "@/components/Logo";
 
 const Footer = () => {
   return (
@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Compliance Technologies" className="h-10 w-auto rounded-lg" />
+            <Logo size={40} />
             <span className="font-display font-bold">Compliance Technologies Ltd</span>
           </div>
           
