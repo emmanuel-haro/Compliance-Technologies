@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone } from "lucide-react";
-import logo from "@/assets/logo.jpg";
+import Logo from "@/components/Logo";
 
 const Hero = () => {
   return (
@@ -14,7 +14,7 @@ const Hero = () => {
       <nav className="relative z-10 container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Compliance Technologies" className="h-12 w-auto rounded-lg" />
+            <Logo size={48} />
             <span className="font-display font-bold text-xl hidden sm:block">Compliance Technologies</span>
           </div>
           <div className="hidden md:flex items-center gap-8">
