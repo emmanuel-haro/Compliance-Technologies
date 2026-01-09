@@ -54,7 +54,6 @@ const About = () => {
               <div>
                 <div className="font-display font-semibold text-lg">Ann M. Maina</div>
                 <div className="text-muted-foreground">Director</div>
-                <div className="text-primary text-sm mt-1">0722 710 072</div>
               </div>
             </div>
           </div>

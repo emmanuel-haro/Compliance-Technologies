@@ -69,10 +69,6 @@ const Hero = () => {
               <div className="text-sm text-muted-foreground mt-1">Sites Deployed</div>
             </div>
             <div>
-              <div className="font-display text-3xl sm:text-4xl font-bold text-gradient">6+</div>
-              <div className="text-sm text-muted-foreground mt-1">Major Clients</div>
-            </div>
-            <div>
               <div className="font-display text-3xl sm:text-4xl font-bold text-gradient">100%</div>
               <div className="text-sm text-muted-foreground mt-1">Kenyan Owned</div>
             </div>
