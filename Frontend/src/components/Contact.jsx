@@ -2,8 +2,52 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !message) {
+      toast({ title: "Please fill in required fields", description: "Name, email and message are required." });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, company, email, message }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        toast({ title: "Message sent", description: "We received your message and will get back to you soon." });
+        setName("");
+        setCompany("");
+        setEmail("");
+        setMessage("");
+      } else {
+        const errMsg = data?.errors?.[0]?.msg || data?.error || "Failed to send message";
+        toast({ title: "Error", description: errMsg });
+      }
+    } catch (err) {
+      console.error(err);
+      toast({ title: "Error", description: "Network or server error" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-24 bg-card relative overflow-hidden">
       <div className="absolute inset-0 grid-pattern opacity-20" />
@@ -64,27 +108,27 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="card-gradient rounded-2xl p-8 border border-border">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium mb-2 block">Name</label>
-                  <Input placeholder="Your name" className="bg-background/50" />
+                  <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className="bg-background/50" />
                 </div>
                 <div>
                   <label className="text-sm font-medium mb-2 block">Company</label>
-                  <Input placeholder="Your company" className="bg-background/50" />
+                  <Input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Your company" className="bg-background/50" />
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">Email</label>
-                <Input type="email" placeholder="your@email.com" className="bg-background/50" />
+                <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="your@email.com" className="bg-background/50" />
               </div>
               <div>
                 <label className="text-sm font-medium mb-2 block">Message</label>
-                <Textarea placeholder="Tell us about your project..." rows={4} className="bg-background/50" />
+                <Textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell us about your project..." rows={4} className="bg-background/50" />
               </div>
-              <Button variant="glow" className="w-full">
-                Send Message
+              <Button type="submit" disabled={isLoading} variant="glow" className="w-full">
+                {isLoading ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>
